@@ -289,6 +289,7 @@ class LanguageModelGroupedQueryAttention(nn.Module):
                 attn = attn + additive_attn_mask 
 
             attn = F.softmax(attn, dim=-1)
+            # print(f"attn: {attn.shape}")
             attn = self.attn_dropout(attn)
             y = attn @ v_exp
             
@@ -470,6 +471,7 @@ class LanguageModel(nn.Module):
 
         for i, block in enumerate(self.blocks):
             x, kv_cache[i] = block(x, cos, sin, attention_mask, kv_cache[i])
+            # print(f"interm. hidden state: {x.shape}")
 
         x = self.norm(x)
 

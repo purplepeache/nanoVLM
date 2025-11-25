@@ -84,6 +84,8 @@ class VisionLanguageModel(nn.Module):
         images_tensor = self._process_images(images, input_ids.device)
         token_embd = self.decoder.token_embedding(input_ids) # [B, T_prompt_text, D_lm]
 
+        # print(f"token_embd: {token_embd.shape}")
+
         if images_tensor is not None:
             # 1. Process image if present
             image_embd = self.vision_encoder(images_tensor) # [B, T_img_feat, D_model]
@@ -93,6 +95,8 @@ class VisionLanguageModel(nn.Module):
 
         current_total_seq_len = token_embd.size(1)
         batch_size = input_ids.size(0) # Or token_embd.size(0)
+
+        # print(f"token_embd: {token_embd.shape}")
         
         # --- Multimodal Prefill Phase ---
         prefill_output, kv_cache_list = self.decoder(
@@ -101,6 +105,8 @@ class VisionLanguageModel(nn.Module):
             kv_cache=None,
             start_pos=0
         )
+
+        # print(f"prefill_output: {prefill_output.shape}")
         
         last_token_output_from_prefill = prefill_output[:, -1, :] 
         
