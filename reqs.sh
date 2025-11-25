@@ -5,6 +5,3 @@ pip install flash-attn --no-build-isolation
 
 pip install spacy nltk
 python -m spacy download en_core_web_lg
-
-sudo apt update
-sudo apt install parallel
