@@ -13,7 +13,7 @@ wheels/
 .ruff_cache
 wandb/
 logs/
-*.csv
+# *.csv
 .vscode
 
 .python-version
